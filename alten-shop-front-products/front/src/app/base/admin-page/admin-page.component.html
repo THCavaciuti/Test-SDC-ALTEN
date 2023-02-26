@@ -1,0 +1,168 @@
+<p-table #dt [value]="products" dataKey="id" [rows]="10"
+    [resizableColumns]="true" [autoLayout]="true"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10,25,50]" [loading]="loading" 
+    [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [filterDelay]="0" [globalFilterFields]="['code','name']"
+    editMode="row" [rowHover]="true"
+    > 
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+            <span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr *ngIf="!editingMode">
+            <th>
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="code">Code<p-sortIcon field="code"></p-sortIcon></th>
+            <th pSortableColumn="name">Name<p-sortIcon field="name"></p-sortIcon></th>
+            <th>Actions</th>
+        </tr>
+        <tr *ngIf="!editingMode">
+            <th style="width:8rem"></th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($any($event.target).value, 'code', 'startsWith')" placeholder="Search by Code" class="p-column-filter">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($any($event.target).value, 'name', 'startsWith')" placeholder="Search by Name" class="p-column-filter">
+            </th>
+            <th></th>
+        </tr>
+
+        <tr *ngIf="editingMode">
+            <th>
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="code">Code<p-sortIcon field="code"></p-sortIcon></th>
+            <th pSortableColumn="name">Name<p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn="description">Description<p-sortIcon field="description"></p-sortIcon></th>
+            <th pSortableColumn="price">Price<p-sortIcon field="price"></p-sortIcon></th>
+            <th pSortableColumn="quantity">Quantity<p-sortIcon field="quantity"></p-sortIcon></th>
+            <th pSortableColumn="inventoryStatus">Status<p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+            <th pSortableColumn="category">Category<p-sortIcon field="category"></p-sortIcon></th>
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product let-editing let-ri="rowIndex">
+        <tr *ngIf="!editingMode" [pEditableRow]="product" class="p-selectable-row">
+            <td>
+                <p-tableCheckbox [value]="product"></p-tableCheckbox>
+            </td>
+            <td>
+                <span class="p-column-title">Code</span>
+                {{product.code}}
+            </td>
+            <td>
+                <span class="p-column-title">Name</span>
+                {{product.name}}
+            </td>
+            <td>
+                <button pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(product)" class="p-button-rounded p-button-text"></button>
+                <button *ngIf="!editingMode" pButton pRipple type="button" pInitEditableRow icon="pi pi-trash" (click)="onRowEditDelete(product.id)" class="p-button-rounded p-button-text"></button>
+            </td>   
+        </tr>
+
+         <tr *ngIf="editingMode" [pEditableRow]="product" class="p-selectable-row">
+            <td>
+                <p-tableCheckbox [value]="product"></p-tableCheckbox>
+            </td>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="product.code">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{product.code}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="product.name">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{product.name}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="product.description">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{product.description}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="product.price">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{product.price}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="product.quantity">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{product.quantity}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-dropdown [options]="statuses" [(ngModel)]="product.inventoryStatus" [style]="{'width':'100%'}"></p-dropdown>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{product.inventoryStatus}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-dropdown [options]="categories" [(ngModel)]="product.category" [style]="{'width':'100%'}"></p-dropdown>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{product.category}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <!-- <td pEditableColumn>
+                <p-cellEditor>
+                    <p-dropdown [options]="categories">
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="product.category">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{product.category}}
+                        </ng-template>
+                    </p-dropdown>
+                </p-cellEditor>
+            </td> -->
+            
+            <td>
+                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(product)" class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(product, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+            </td>   
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="7">No products found.</td>
+        </tr>
+    </ng-template>
+</p-table>

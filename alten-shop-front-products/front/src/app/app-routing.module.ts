@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminPageComponent } from './base/admin-page/admin-page.component';
 
 const routes: Routes = [
-
+  { path: "admin/products", component: AdminPageComponent },
 ];
 
 @NgModule({
@@ -10,4 +11,4 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 
-export class AppRoutingModule {}
+export class AppRoutingModule { }
