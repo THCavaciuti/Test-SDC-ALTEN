@@ -8,6 +8,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { ThemeToggleButtonComponent } from 'app/base/theme-toggle-button/theme-toggle-button.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
+import { ProductsPageComponent } from './products-page/products-page.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
     SidenavComponent,
     ThemeToggleButtonComponent,
     BreadcrumbComponent,
-    AdminPageComponent
+    AdminPageComponent,
+    ProductsPageComponent
   ],
   imports: [
     CommonModule,

@@ -191,9 +191,10 @@ app-navbar {
   &.sidenav-expanded {
     &.sidenav-pinned {
       .app-frame,
+      .app-content,
       .app-header {
         margin-left: 260px;
-      }
+      } 
     }
   }
 
